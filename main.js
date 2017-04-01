@@ -40,6 +40,7 @@ function activatePrestige(id) {
 
 function update() {
 	data.coins += getGain();
+	localStorage.SHITPOST = JSON.stringify(data);
 }
 
 function draw() {
@@ -58,6 +59,9 @@ function draw() {
 }
 
 window.addEventListener("load",function () {
+	if (localStorage.SHITPOST) {
+		data = JSON.parse(localStorage.SHITPOST)
+	}
 	draw();
 	for (var i = 0; i < 10; i++) {
 		document.getElementById("tier"+(i+1)+"btn").addEventListener(
