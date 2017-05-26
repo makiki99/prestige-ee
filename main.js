@@ -41,6 +41,7 @@ function activatePrestige(id) {
 function update() {
 	data.coins += getGain();
 	localStorage.SHITPOST = JSON.stringify(data);
+	localStorage.lastUpdate = Date.now().toString(10);
 }
 
 function draw() {
@@ -61,6 +62,10 @@ function draw() {
 window.addEventListener("load",function () {
 	if (localStorage.SHITPOST) {
 		data = JSON.parse(localStorage.SHITPOST)
+	}
+	if (localStorage.lastUpdate) {
+		var delta = Date.now() - parseInt(localStorage.lastUpdate,10)
+		data.coins += Math.floor(getGain() * delta / 1000);
 	}
 	draw();
 	for (var i = 0; i < 10; i++) {
