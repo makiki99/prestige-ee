@@ -39,13 +39,21 @@ function activatePrestige(id) {
 }
 
 function update() {
-	data.coins += getGain();
+	const curTime = (new Date()).getTime();
+	let deltaTime;
+	if (data.lastTime !== undefined) {
+		deltaTime = (curTime - data.lastTime) / 1000;
+	} else {
+		deltaTime = 1;
+	}
+	data.coins += getGain() * deltaTime;
 	localStorage.SHITPOST = JSON.stringify(data);
 	localStorage.lastUpdate = Date.now().toString(10);
+	data.lastTime = curTime;
 }
 
 function draw() {
-	document.getElementById("coins").innerHTML = data.coins;
+	document.getElementById("coins").innerHTML = Math.floor(data.coins);
 	document.getElementById("gain").innerHTML = getGain();
 	data.prestiges.forEach(function (el, i) {
 		document.getElementById("tier"+(i+1)+"cost").innerHTML = getRequirement(i);
