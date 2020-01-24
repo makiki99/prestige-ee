@@ -39,17 +39,12 @@ function activatePrestige(id) {
 }
 
 function update() {
+	//scale the gain by the actual number of seconds since the last update
 	const curTime = (new Date()).getTime();
-	let deltaTime;
-	if (data.lastTime !== undefined) {
-		deltaTime = (curTime - data.lastTime) / 1000;
-	} else {
-		deltaTime = 1;
-	}
+	const deltaTime = (data.lastTime === undefined) ? 1 : ((curTime - data.lastTime) / 1000);
+	data.lastTime = curTime;
 	data.coins += getGain() * deltaTime;
 	localStorage.SHITPOST = JSON.stringify(data);
-	localStorage.lastUpdate = Date.now().toString(10);
-	data.lastTime = curTime;
 }
 
 function draw() {
@@ -70,10 +65,6 @@ function draw() {
 window.addEventListener("load",function () {
 	if (localStorage.SHITPOST) {
 		data = JSON.parse(localStorage.SHITPOST)
-	}
-	if (localStorage.lastUpdate) {
-		var delta = Date.now() - parseInt(localStorage.lastUpdate,10)
-		data.coins += Math.floor(getGain() * delta / 1000);
 	}
 	draw();
 	for (var i = 0; i < 10; i++) {
