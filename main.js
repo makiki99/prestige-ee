@@ -7,7 +7,7 @@ function getGain() {
 	var gain = 1;
 	data.prestiges.forEach(function (el) {
 		gain *= 1+el;
-	})
+	});
 	return gain;
 }
 
@@ -15,7 +15,7 @@ function getRequirement(id) {
 	if (id === 0) {
 		return Math.floor(Math.pow(1.5,data.prestiges[0])*10);
 	} else {
-		return Math.pow(id+1,data.prestiges[id]+1)
+		return Math.pow(id+1,data.prestiges[id]+1);
 	}
 }
 
@@ -59,12 +59,12 @@ function draw() {
 		} else {
 			document.getElementById("tier"+(i+1)+"btn").disabled = true;
 		}
-	})
+	});
 }
 
 window.addEventListener("load",function () {
 	if (localStorage.SHITPOST) {
-		data = JSON.parse(localStorage.SHITPOST)
+		data = JSON.parse(localStorage.SHITPOST);
 	}
 	draw();
 	for (var i = 0; i < 10; i++) {
@@ -73,7 +73,7 @@ window.addEventListener("load",function () {
 			(function(n) {
 				return (function () {
 					activatePrestige(n);
-				})
+				});
 			}(i))
 		);
 	}
@@ -81,5 +81,5 @@ window.addEventListener("load",function () {
 		update();
 		draw();
 	}, 1000);
-	console.log("interval loaded")
-})
+	console.log("interval loaded");
+});
