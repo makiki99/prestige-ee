@@ -7,7 +7,7 @@ function getGain() {
 	var gain = 1;
 	data.prestiges.forEach(function (el) {
 		gain *= 1+el;
-	})
+	});
 	return gain;
 }
 
@@ -15,7 +15,7 @@ function getRequirement(id) {
 	if (id === 0) {
 		return Math.floor(Math.pow(1.5,data.prestiges[0])*10);
 	} else {
-		return Math.pow(id+1,data.prestiges[id]+1)
+		return Math.pow(id+1,data.prestiges[id]+1);
 	}
 }
 
@@ -39,12 +39,16 @@ function activatePrestige(id) {
 }
 
 function update() {
-	data.coins += getGain();
+	//scale the gain by the actual number of seconds since the last update
+	const curTime = (new Date()).getTime();
+	const deltaTime = (data.lastTime === undefined) ? 1 : ((curTime - data.lastTime) / 1000);
+	data.lastTime = curTime;
+	data.coins += getGain() * deltaTime;
 	localStorage.SHITPOST = JSON.stringify(data);
 }
 
 function draw() {
-	document.getElementById("coins").innerHTML = data.coins;
+	document.getElementById("coins").innerHTML = Math.floor(data.coins);
 	document.getElementById("gain").innerHTML = getGain();
 	data.prestiges.forEach(function (el, i) {
 		document.getElementById("tier"+(i+1)+"cost").innerHTML = getRequirement(i);
@@ -55,12 +59,12 @@ function draw() {
 		} else {
 			document.getElementById("tier"+(i+1)+"btn").disabled = true;
 		}
-	})
+	});
 }
 
 window.addEventListener("load",function () {
 	if (localStorage.SHITPOST) {
-		data = JSON.parse(localStorage.SHITPOST)
+		data = JSON.parse(localStorage.SHITPOST);
 	}
 	draw();
 	for (var i = 0; i < 10; i++) {
@@ -69,7 +73,7 @@ window.addEventListener("load",function () {
 			(function(n) {
 				return (function () {
 					activatePrestige(n);
-				})
+				});
 			}(i))
 		);
 	}
@@ -77,5 +81,5 @@ window.addEventListener("load",function () {
 		update();
 		draw();
 	}, 1000);
-	console.log("interval loaded")
-})
+	console.log("interval loaded");
+});
