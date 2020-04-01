@@ -3,12 +3,14 @@ var data = {
 	prestiges: [0,0,0,0,0,0,0,0,0,0]
 };
 
+var metaBonus = 1;
+
 function getGain() {
 	var gain = 1;
 	data.prestiges.forEach(function (el) {
 		gain *= 1+el;
 	});
-	return gain;
+	return gain*metaBonus;
 }
 
 function getRequirement(id) {
@@ -65,6 +67,9 @@ function draw() {
 window.addEventListener("load",function () {
 	if (localStorage.SHITPOST) {
 		data = JSON.parse(localStorage.SHITPOST);
+	}
+	if (localStorage.META) {
+		metaBonus = JSON.parse(localStorage.META).multiForOthers;
 	}
 	draw();
 	for (var i = 0; i < 10; i++) {
