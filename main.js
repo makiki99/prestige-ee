@@ -5,12 +5,35 @@ var data = {
 
 var metaBonus = 1;
 
+function resetCheck() {
+    if (localStorage.RESET_1) {
+        data = {
+            coins: 0,
+            prestiges: [0,0,0,0,0,0,0,0,0,0]
+        };
+        localStorage.removeItem("RESET_1");
+    }
+    return false;
+}
+
+function getPPBonus() {
+    if (localStorage.PP) {
+        let temp = JSON.parse(localStorage.PP).prestiges;
+        var out = 1;
+        temp.forEach(function (el) {
+            out *= 1+el;
+        });
+        return out;
+    }
+    return 1;
+}
+
 function getGain() {
 	var gain = 1;
 	data.prestiges.forEach(function (el) {
 		gain *= 1+el;
 	});
-	return gain*metaBonus;
+	return gain*metaBonus*getPPBonus();
 }
 
 function getRequirement(id) {
@@ -46,6 +69,7 @@ function update() {
 	const deltaTime = (data.lastTime === undefined) ? 1 : ((curTime - data.lastTime) / 1000);
 	data.lastTime = curTime;
 	data.coins += getGain() * deltaTime;
+    resetCheck();
 	localStorage.SHITPOST = JSON.stringify(data);
 }
 
