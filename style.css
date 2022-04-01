@@ -2,8 +2,61 @@ body {
 	width: 800px;
 	margin: 0 auto;
 	text-align: center;
+	background-color: #111;
+	color: #eee;
+	font-family: sans-serif;
 }
 table {
 	width: inherit;
 }
+.logo_container {
+	border: 2px solid white;
+	color: black;
+	background-color: white;
+	transform: skewX(-25deg);
+	width: 220px;
+	margin: 8px auto;
+	padding: 0 10px;
+	font-family: fantasy;
+}
+h1.logo {
+	transform: skewX(25deg);
+	text-align: left;
+	margin: 0;
+	padding: 0;
+}
 
+h4.logo {
+	transform: skewX(25deg);
+	text-align: right;
+	margin: 0;
+	padding: 0;
+}
+
+tr {
+	transform: skewX(-25deg);
+}
+
+th {
+	border: 2px solid white;
+	color: black;
+	background-color: white;
+}
+
+td {
+	border: 2px solid #aaa;
+}
+
+.unskew{
+	transform: skewX(25deg);
+}
+
+button {
+	background-color: lightgray;
+	width: 100%;
+	border-color: black;
+}
+
+button:disabled {
+	background-color: black;
+}
